@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+void showMenu() {
+    cout << "==============================" << endl;
+    cout << "      Calculator App" << endl;
+    cout << "==============================" << endl;
+    cout << "1. Addition (+)" << endl;
+    cout << "2. Subtraction (-)" << endl;
+    cout << "3. Multiplication (*)" << endl;
+    cout << "4. Division (/)" << endl;
+    cout << "5. Exit" << endl;
+    cout << "Enter your choice (1-5): ";
+}
+
+double calculate(double num1, double num2, char operation) {
+    switch (operation) {
+        case '+': return num1 + num2;
+        case '-': return num1 - num2;
+        case '*': return num1 * num2;
+        case '/': return (num2 != 0) ? num1 / num2 : throw invalid_argument("Division by zero");
+        default: throw invalid_argument("Invalid operation");
+    }
+}
+
+int main() {
+    int choice;
+    double num1, num2, result;
+
+    while (true) {
+        showMenu();
+        cin >> choice;
+
+        if (choice == 5) {
+            cout << "Exiting the Calculator App. Goodbye!" << endl;
+            break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "Enter the first number: ";
+            cin >> num1;
+            cout << "Enter the second number: ";
+            cin >> num2;
+
+            try {
+                char operation = choice == 1 ? '+' : choice == 2 ? '-' : choice == 3 ? '*' : '/';
+                result = calculate(num1, num2, operation);
+                cout << "Result: " << result << endl;
+            } catch (const invalid_argument &e) {
+                cout << "Error: " << e.what() << endl;
+            }
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
